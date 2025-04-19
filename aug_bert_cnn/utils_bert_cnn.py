@@ -38,29 +38,34 @@ def read_file(filepath):
 
 # Plot bar plots for comparison between CNN and BERT models
 def plot_metrics_comparison_bert_cnn(metrics_cnn, metrics_bert, title=""):
-    metrics_cnn = metrics_cnn.copy()
-    metrics_bert = metrics_bert.copy()
+    metrics_cnn = {k: v[0] if isinstance(v, list) else v for k, v in metrics_cnn.items()}
+    metrics_bert = {k: v[0] if isinstance(v, list) else v for k, v in metrics_bert.items()}
+
     
-    models = ['CNN', 'BERT']
     metrics = ["Accuracy", "Precision", "Recall", "F1 Score", "AUC"]
     titles = ["Accuracy", "Precision", "Recall", "F1 Score", "AUC"]
     
     # Create a 1-row, 5-column subplot
     fig = make_subplots(rows=1, cols=5, subplot_titles=titles)
 
-    # Plot metrics for CNN and BERT
+    # Plot each metric in its own subplot
     for i, metric in enumerate(metrics):
         fig.add_trace(
-            go.Bar(name="CNN", x=models, y=[metrics_cnn[metric], metrics_bert[metric]]),
+            go.Bar(name="CNN", x=["CNN"], y=[metrics_cnn[metric]], marker_color='royalblue'),
+            row=1, col=i+1
+        )
+        fig.add_trace(
+            go.Bar(name="BERT", x=["BERT"], y=[metrics_bert[metric]], marker_color='orange'),
             row=1, col=i+1
         )
 
     fig.update_layout(
-        title=f"Model Performance Comparison (CNN vs BERT) {title}",
+        title_text=f"Model Performance Comparison (CNN vs BERT) {title}",
         barmode='group',
         height=500,
         width=1600,
-        legend=dict(x=1.05, y=1.1)
+        legend=dict(x=1.05, y=1.1),
+        showlegend=True
     )
 
     fig.show()
