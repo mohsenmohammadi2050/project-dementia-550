@@ -69,6 +69,32 @@ This project uses the **ADReSS-2020 dataset**, It has recorded speech from peopl
 - `CC`: Control (Healthy participants)  
 - `CD`: Case (Dementia participants)
 
+**Note:** Due to licensing restrictions, the dataset is not included in this repository. Users must download it separately and place it in the root directory with the following structure:
+
+train data:
+```text
+ADReSS-IS2020-data/
+├── train/
+│   ├── transcription/
+│   │   ├── cc/
+│   │   └── cd/
+│   ├── cc_meta_data.txt
+│   └── cd_meta_data.txt
+```
+test data:
+```text
+ADReSS-IS2020-data-test/
+├── test/
+│   └── transcription/
+└── test_labels.txt
+```
+
+The ***test_labels.txt*** file must include both labels and metadata in the following format:
+```text
+ID   ; age; gender; Label ; mmse
+S160 ; 63 ; 1 ; 0 ; 28
+...
+```
 
 ### Code Directories
 
